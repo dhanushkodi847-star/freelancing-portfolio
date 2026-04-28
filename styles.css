@@ -452,6 +452,16 @@ body {
   font-family: 'Inter', sans-serif;
 }
 .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(108,92,231,0.4); }
+.form-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
+.form-status {
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+.form-status.success { color: #00e676; padding: 12px; background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.2); }
+.form-status.error { color: #ff6b6b; padding: 12px; background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.2); }
 
 /* ══════════════════ FOOTER ══════════════════ */
 .footer {

@@ -397,7 +397,7 @@
           </div>
           <div class="contact-detail">
             <div class="contact-detail-icon">📍</div>
-            <span>Adambakkam, Chennai, Tamil Nadu</span>
+            <span>Chennai, TamilNadu, India</span>
           </div>
           <div class="contact-detail">
             <div class="contact-detail-icon">🕒</div>
@@ -418,10 +418,7 @@
             </a>
           </div>
         </div>
-        <form class="contact-form reveal" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-          <input type="hidden" name="subject" value="New Portfolio Contact from Website">
-          <input type="hidden" name="from_name" value="Portfolio Contact Form">
+        <form class="contact-form reveal" id="contact-form">
           <div class="form-group">
             <input type="text" name="name" id="name" placeholder="Your Name" required>
           </div>
@@ -434,7 +431,8 @@
           <div class="form-group">
             <textarea name="message" id="message" placeholder="Your Message" required></textarea>
           </div>
-          <button type="submit" class="form-submit">Send Message →</button>
+          <button type="submit" class="form-submit" id="submit-btn">Send Message →</button>
+          <div id="form-status" class="form-status"></div>
         </form>
       </div>
     </div>

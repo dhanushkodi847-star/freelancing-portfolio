@@ -119,22 +119,66 @@ if (heroSection) {
 // ── Contact form handling ──
 const form = document.getElementById('contact-form');
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = form.querySelector('.form-submit');
+
+    const btn = document.getElementById('submit-btn');
+    const statusEl = document.getElementById('form-status');
     const originalText = btn.textContent;
+
+    // Get form data
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    // Clear previous status
+    statusEl.textContent = '';
+    statusEl.className = 'form-status';
+
+    // Show loading state
     btn.textContent = 'Sending...';
     btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = '✓ Message Sent!';
-      btn.style.background = 'linear-gradient(135deg, #00b894, #00cec9)';
-      form.reset();
+
+    try {
+      const response = await fetch('http://localhost:5000/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Success
+        btn.textContent = '✓ Message Sent!';
+        btn.style.background = 'linear-gradient(135deg, #00b894, #00cec9)';
+        statusEl.textContent = data.message;
+        statusEl.className = 'form-status success';
+        form.reset();
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '';
+          btn.disabled = false;
+          statusEl.textContent = '';
+          statusEl.className = 'form-status';
+        }, 4000);
+      } else {
+        // Server returned an error
+        throw new Error(data.error || 'Something went wrong');
+      }
+    } catch (error) {
+      btn.textContent = '✗ Failed to Send';
+      btn.style.background = 'linear-gradient(135deg, #e74c3c, #fd79a8)';
+      statusEl.textContent = error.message || 'Could not connect to the server. Please try again later.';
+      statusEl.className = 'form-status error';
+
       setTimeout(() => {
         btn.textContent = originalText;
         btn.style.background = '';
         btn.disabled = false;
       }, 3000);
-    }, 1500);
+    }
   });
 }
 
